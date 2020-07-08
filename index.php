@@ -11,7 +11,7 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<a href="/barcode/index.php?barcode=$_GET['barcode']"></a>
+<!-- <a href="/barcode/index.php?barcode=a">check</a> -->
 <form action="/barcode/index.php" method="POST">
 <div class="container p-3 my-b3 bg-primary text-white">
 
@@ -34,6 +34,28 @@
   </div>
 </form>
 
+<!-- <form action="/barcode/index.php" method="get">
+<div class="container p-3 my-b3 bg-primary text-white">
+
+
+  <div class="form-group" >
+    <label for="barcode">Barcode:</label>
+    <input type="text" class="form-control" placeholder="Enter Barcode" id="barcode" name="barcode" required>
+    </div>
+    
+    </div>
+    </div>
+    <div class="container">
+    </div>
+  <p><button type="submit" class="btn btn-primary">check</button></p>
+   
+    
+    
+  
+  </div>
+  </div>
+</form> -->
+
 <php>
 
 
@@ -51,7 +73,20 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 } 
 
-$token= isset($_POST['barcode'])?$_POST['barcode']:0;
+$token = null;
+
+// isset($_GET['barcode']) ? $_GET['barcode'] ? isset($_POST['barcode']) : $_POST['barcode'] : '';
+
+if (isset($_GET['barcode'])) 
+{
+    $token = $_GET['barcode'];
+}
+elseif (isset($_POST['barcode']))
+{
+    $token = $_POST['barcode'];
+}
+
+
 
 
 $sql ="SELECT * FROM code WHERE token ='$token'";
@@ -79,13 +114,7 @@ if($attend==0){
 
 
     
-  } }else {
-      if($token===0){
-        echo " <script>alert('welcome');</script>";
-      }else{
-      echo " <script>alert('not found');</script>";
-      }
-  }
+  } }
 
 
 $conn->close();
