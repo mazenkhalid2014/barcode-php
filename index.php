@@ -18,14 +18,41 @@
 
   <div class="form-group" >
     <label for="barcode">Barcode:</label>
-    <input type="text" class="form-control" placeholder="Enter Barcode" id="barcode" name="barcode" required>
+    <l><input type="text" class="form-control" placeholder="Enter Barcode" id="barcode" name="barcode" required></l>
+    </div>
+    
+    </div>
+  <div> 
+
+  </div>
+  <div> </div>
+    <div class="form-group" >
+    <div class="container">
+    
+  <p><button type="submit" class="btn btn-primary">check</button></p>
+   
+  </div>
+    </div>
+    
+  
+  </div>
+  </div>
+</form>
+
+<form action="/barcode/index.php" method="get">
+
+
+
+  <div class="form-group" >
+    <label for="barcode"  style="display: none;">Barcode: </label>
+    <input type="text" class="form-control" placeholder="Enter Barcode" id="barcode" name="barcode"  style="display: none;" required>
     </div>
     
     </div>
     </div>
     <div class="container">
     </div>
-  <p><button type="submit" class="btn btn-primary">check</button></p>
+  <p><button type="submit" class="btn btn-primary"  style="display: none;">check</button></p>
    
     
     
@@ -33,28 +60,6 @@
   </div>
   </div>
 </form>
-
-<!-- <form action="/barcode/index.php" method="get">
-<div class="container p-3 my-b3 bg-primary text-white">
-
-
-  <div class="form-group" >
-    <label for="barcode">Barcode:</label>
-    <input type="text" class="form-control" placeholder="Enter Barcode" id="barcode" name="barcode" required>
-    </div>
-    
-    </div>
-    </div>
-    <div class="container">
-    </div>
-  <p><button type="submit" class="btn btn-primary">check</button></p>
-   
-    
-    
-  
-  </div>
-  </div>
-</form> -->
 
 <php>
 
@@ -96,25 +101,27 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
  
+        $v=$row["token"];
+        $attend=$row["attend"];
+      
+      } 
+      
+      if($attend==0){
+     $sql = "UPDATE code SET attend='1' WHERE  token ='$token'";
 
-  $attend=$row["attend"];
-  
-
-if($attend==0){
-    $sql = "UPDATE code SET attend='1' WHERE  token ='$token'";
-
-    if ($conn->query($sql) === TRUE) {
+      if ($conn->query($sql) === TRUE) {
       echo "<script>alert('Record updated successfully');</script>";
-    } else {
-      echo "Error updating record: " . $conn->error;
-    }
-}elseif($attend==1 ){
-    echo "<script>alert('already entered');</script>";
-}
+     }
+     }elseif($attend==1 ){
+      echo "<script>alert('already entered');</script>";
+       }
 
 
-    
-  } }
+     }else{
+        echo "<script>alert('not found');</script>";
+     }
+
+
 
 
 $conn->close();
